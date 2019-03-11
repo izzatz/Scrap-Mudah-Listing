@@ -1,22 +1,37 @@
 from bs4 import BeautifulSoup
 #from selenium import webdriver
 from selenium.webdriver import ChromeOptions, Chrome
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 import requests
+import time
 import os, sys
 import codecs
 
+# chromedriver binary path
 chromedriver_path = './chromedriver.exe'
 
+# caps setting for page loading settings
+caps = DesiredCapabilities().CHROME
+caps["pageLoadStrategy"] = "normal"  #complete
+#caps["pageLoadStrategy"] = "eager"  #interactive
+#caps["pageLoadStrategy"] = "none"
+
+# Chrome options
+opts = ChromeOptions()
+opts.add_experimental_option("detach", True)
+
+driver = Chrome(options=opts, desired_capabilities=caps)
+
+# url of the homepage that will be scrap
 homepage = "https://www.mudah.my/"
+
 # url to search macbook in penang under category computer
 url = "https://www.mudah.my/Penang/Computers-and-Accessories-3060/macbook-for-sale?lst=0&fs=1&w=103&cg=3060&q=macbook&so=1&st=s"
 # url = "Used and New Laptops for sale, Buy second hand laptops in Malaysia, Sell laptops, computers, projectors, printers and hard disk drives in Malaysia.htm"
 
-opts = ChromeOptions()
-opts.add_experimental_option("detach", True)
-driver = Chrome(chrome_options=opts)
-
+# global keyword can be set here
 keyword_search = "Macbook"
+
 
 def nav_search_page():
     #driver = webdriver.Chrome(chromedriver_path)  # Optional argument, if not specified will search path.
@@ -29,11 +44,13 @@ def nav_search_page():
     driver.find_element_by_xpath("""//*[@id="findModal"]/div/div/div[2]/div/div/div[3]/a[1]""").click()
 
     # click category
-    driver.find_element_by_xpath("""//*[@id="select2list-container-catgroup"]/ul/li[19]/a""").click()
+    # driver.find_element_by_xpath("""//*[@id="select2list-button-catgroup"]""").click()
+    # time.sleep(3)
+    # driver.find_element_by_xpath("""// *[ @ id = "catgroup"] / option[23]""").click()
+
 
     # search keyword in textbox
-    driver.find_element_by_xpath("""//*[@id="searchtext"]""").text(keyword_search)
-
+    #driver.find_element_by_xpath("""//*[@id="searchtext"]""").text(keyword_search)
 
 
 def extract_title():
@@ -42,7 +59,7 @@ def extract_title():
     result = soup.find_all(lambda tag: tag.name == 'h2' and tag.get('class') == ['list_title'])
 
     for item in result:
-        print (item)
+        print(item)
 
 
 def main():
