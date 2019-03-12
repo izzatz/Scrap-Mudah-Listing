@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 #from selenium import webdriver
 from selenium.webdriver import ChromeOptions, Chrome
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+from selenium.common.exceptions import NoSuchElementException
 import requests
 import time
 import os, sys
@@ -52,6 +53,21 @@ def nav_search_page():
     # search keyword in textbox
     #driver.find_element_by_xpath("""//*[@id="searchtext"]""").text(keyword_search)
 
+def start_page():
+    # automatically start with shortcut links, start with my preferred location Penang and category that I'm working on.
+    driver.get(url)
+
+
+def next_page():
+    # try catch block to check for next page availability
+    try:
+        # find next page button
+        driver.find_element_by_xpath("""// *[ @ id = "list_ads_container"] / div[2] / div[3] / span[2] / span / a""")
+    except NoSuchElementException:
+        print("Not found")
+    else:
+        print("Found")
+
 
 def extract_title():
     page = requests.get(url)
@@ -64,7 +80,8 @@ def extract_title():
 
 def main():
     #extract_title()
-    nav_search_page()
+    # nav_search_page()
+    start_page()
 
 
 if __name__ == "__main__":
