@@ -82,6 +82,7 @@ def main():
     #extract_title()
     # nav_search_page()
     start_page()
+    next_page()
 
 
 if __name__ == "__main__":
