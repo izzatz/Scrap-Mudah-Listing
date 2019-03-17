@@ -28,10 +28,11 @@ homepage = "https://www.mudah.my/"
 
 # url to search macbook in penang under category computer
 url = "https://www.mudah.my/Penang/Computers-and-Accessories-3060/macbook-for-sale?lst=0&fs=1&w=103&cg=3060&q=macbook&so=1&st=s"
-# url = "Used and New Laptops for sale, Buy second hand laptops in Malaysia, Sell laptops, computers, projectors, printers and hard disk drives in Malaysia.htm"
 
 # global keyword can be set here
 keyword_search = "Macbook"
+
+result_list = result
 
 
 def nav_search_page():
@@ -56,6 +57,7 @@ def nav_search_page():
 def start_page():
     # automatically start with shortcut links, start with my preferred location Penang and category that I'm working on.
     driver.get(url)
+    print(result_list)
 
 
 def next_page():
@@ -74,15 +76,26 @@ def extract_title():
     soup = BeautifulSoup(page.content, 'html.parser')
     result = soup.find_all(lambda tag: tag.name == 'h2' and tag.get('class') == ['list_title'])
 
-    for item in result:
-        print(item)
+    return result
 
+    # print(len(result))
+    # for item in result:
+    #     print(item)
+
+
+def list_all(result):
+    result = result_list
+    print(len(result_list))
+    for item_list in result_list:
+        print(item_list)
 
 def main():
     #extract_title()
     # nav_search_page()
     start_page()
-    next_page()
+    #next_page()
+    extract_title()
+    list_all()
 
 
 if __name__ == "__main__":
