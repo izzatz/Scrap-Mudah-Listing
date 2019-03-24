@@ -58,7 +58,7 @@ def nav_search_page():
 def start_page():
     # automatically start with shortcut links, start with my preferred location Penang and category that I'm working on.
     driver.get(url)
-    print(result_list)
+
 
 
 def next_page():
@@ -82,16 +82,12 @@ def extract_title():
     #page = requests.get(url)
     soup = BeautifulSoup(page.content, 'html.parser')
     result = soup.find_all(lambda tag: tag.name == 'h2' and tag.get('class') == ['list_title'])
-    print (result)
+    # print (result)
     result_list.extend(result)
-
-    print(len(result))
-    for item in result:
-        print(item)
 
 
 def list_all():
-    print("Start list all")
+    print("Total items: ", (len(result_list)))
     for item_list in result_list:
         print(item_list)
 
