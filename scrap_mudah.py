@@ -85,7 +85,12 @@ def extract_title():
 def list_all():
     print("Total items: ", (len(result_list)))
     for item_list in result_list:
-        print(item_list)
+        # Find the url on each line
+        for a in item_list('a', href=True):
+            print ("Found the URL:", a['href'])    
+        # print(item_list)
+
+    
 
 def main():
     # nav_search_page()
