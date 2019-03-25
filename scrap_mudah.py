@@ -1,12 +1,8 @@
 from bs4 import BeautifulSoup
-#from selenium import webdriver
 from selenium.webdriver import ChromeOptions, Chrome
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.common.exceptions import NoSuchElementException
-import requests
-import time
-import os, sys
-import codecs
+import requests, time, os, sys, codecs
 
 # chromedriver binary path
 chromedriver_path = './chromedriver.exe'
@@ -75,9 +71,9 @@ def next_page():
 def extract_title():
     headers = {'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36'}
 
-    #proxies = {'http': 'http://proxy.kssm.intel.com:911', 'https': 'http://proxy.kssm.intel.com:911'}
-    #page = requests.get(url, headers=headers, proxies=proxies)
-    page = requests.get(url, headers=headers)
+    proxies = {'http': 'http://proxy.kssm.intel.com:911', 'https': 'http://proxy.kssm.intel.com:911'}
+    page = requests.get(url, headers=headers, proxies=proxies)
+    #page = requests.get(url, headers=headers)
 
     #page = requests.get(url)
     soup = BeautifulSoup(page.content, 'html.parser')
