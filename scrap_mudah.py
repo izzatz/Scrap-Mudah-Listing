@@ -64,11 +64,21 @@ def next_page():
     try:
         # find next page button
         driver.find_element_by_xpath("""// *[ @ id = "list_ads_container"] / div[2] / div[3] / span[2] / span / a""")
-    except NoSuchElementException:
-        print("Not found")
-    else:
-        print("Found")
 
+    except NoSuchElementException:
+        return False
+        #print("Not found")
+
+    else:
+        return True
+        #driver.find_element_by_xpath("""// *[ @ id = "list_ads_container"] / div[2] / div[3] / span[2] / span / a""").click()
+        #extract_title()
+
+def check_next_page():
+    while next_page() == True:
+        extract_title()
+    else:
+         list_href_only()
 
 def extract_title():
     headers = {'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36'}
@@ -80,7 +90,7 @@ def extract_title():
     result_list.extend(result)
 
 
-def list_all():
+def list_href_only():
     print("Total items: ", (len(result_list)))
     for item_list in result_list:
         # Find the url on each line
@@ -100,10 +110,11 @@ def process_url_list():
 def main():
     # nav_search_page()
     start_page()
-    # next_page()
-    extract_title()
-    list_all()
-    process_url_list()
+    #next_page()
+    check_next_page()
+    # extract_title()
+    list_href_only()
+    # process_url_list()
 
 
 if __name__ == "__main__":
