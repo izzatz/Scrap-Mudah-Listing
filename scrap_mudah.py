@@ -54,12 +54,7 @@ def nav_search_page():
     # driver.find_element_by_xpath("""//*[@id="searchtext"]""").text(keyword_search)
 
 
-def start_page():
-    # automatically start with shortcut links, start with my preferred location Penang and category that I'm working on.
-    driver.get(url)
-
-
-def next_page():
+def next_page_availability():
     # try catch block to check for next page availability
     try:
         # find next page button
@@ -75,8 +70,13 @@ def next_page():
         # extract_title()
 
 
+def start_page():
+    # automatically start with shortcut links, start with my preferred location Penang and category that I'm working on.
+    driver.get(url)
+
+
 def check_next_page():
-    while next_page() == True:
+    while next_page_availability() == True:
         extract_title()
     else:
         list_href_only()
@@ -113,16 +113,32 @@ def send_email():
     server = smtplib.SMTP('smtp.gmail.com', 587)
     server.ehlo()
     server.starttls()
-    
+    server.ehlo()
+        
     server.login('izzatz13@gmail.com', '')
 
     subject = 'New iPhone Listing!'
+    body = 'Check the iPhone Listing'
+
+    msg = f"Subject: {subject}\n\n{body}"
+
+    server.sendmail(
+        'izzatz13@gmail.com',
+        'izzatz13@gmail.com', 
+        msg
+    )
+
+    print('Email has been sent')
+
+    server.quit()
+
 
 def main():
     # nav_search_page()
-    start_page()
-    next_page()
-    check_next_page()
+    # start_page()
+    next_page_availability()
+    # check_next_page()
+    send_email()
     # extract_title()
     # list_href_only()
     # process_url_list()
