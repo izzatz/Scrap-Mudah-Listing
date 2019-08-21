@@ -8,3 +8,4 @@ out.log
 *.exe
 .vscode/
 debug.log
+pass.txt
