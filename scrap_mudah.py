@@ -118,7 +118,6 @@ def list_href_only():
 
 def process_url_list():
     # process the global url_list
-
     for line in url_list:
         print(line)
 
@@ -131,6 +130,7 @@ def read_gmail_pass():
     pass_new = (file_pass.read())
     global pass_old
     pass_old = pass_new
+    print(pass_old)
 
 
 def send_email():
@@ -139,7 +139,7 @@ def send_email():
     server.starttls()
     server.ehlo()
 
-    server.login('izzatz13@gmail.com', '')
+    server.login('izzatz13@gmail.com', 'pass_old')
 
     subject = 'New iPhone Listing!'
     body = 'Check the iPhone Listing'
@@ -147,7 +147,7 @@ def send_email():
     msg = f"Subject: {subject}\n\n{body}"
 
     server.sendmail(
-        'izzatz13@gmail.com',
+        'iz.mail.robot@gmail.com',
         'izzatz13@gmail.com',
         msg
     )
@@ -157,16 +157,26 @@ def send_email():
     server.quit()
 
 
+def bfr():
+    print("bfr", pass_old)
+
+
+def aftr():
+    print("aftr", pass_old)
+
+
 def main():
     # nav_search_page()
     # start_page()
     # next_page_availability()
     # check_next_page()
-    # send_email()
     # extract_title()
     # list_href_only()
     # process_url_list()
+    bfr()
     read_gmail_pass()
+    aftr()
+    # send_email()
 
 
 if __name__ == "__main__":
