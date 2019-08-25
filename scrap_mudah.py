@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 from selenium.webdriver import ChromeOptions, Chrome
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.common.exceptions import NoSuchElementException
+import urllib.request
 import requests
 import time
 import os
@@ -27,7 +28,7 @@ headers = {'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleW
 proxies = {'http': 'http://proxy.kssm.intel.com:911',
            'https': 'http://proxy.kssm.intel.com:911'}
 
-driver = Chrome(options=opts, desired_capabilities=caps)
+#driver = Chrome(options=opts, desired_capabilities=caps)
 
 # url of the homepage that will be scrap
 homepage = "https://www.mudah.my/"
@@ -47,6 +48,15 @@ gmail_app_password = ""
 
 url_list = []
 result_dict = {}
+
+
+def check_website_up_down():
+    if (urllib.request.urlopen(homepage).getcode()) == 200:
+        # print("True")
+        return True
+    else:
+        # print("False")
+        return False
 
 
 def nav_search_page():
@@ -158,6 +168,12 @@ def send_email():
 
 
 def main():
+
+    if check_website_up_down() == True:
+        print("Website is up!")
+    else:
+        print("Website is down!")
+
     # nav_search_page()
     # start_page()
     # next_page_availability()
@@ -165,7 +181,7 @@ def main():
     # extract_title()
     # list_href_only()
     # process_url_list()
-    send_email()
+    # send_email()
 
 
 if __name__ == "__main__":
