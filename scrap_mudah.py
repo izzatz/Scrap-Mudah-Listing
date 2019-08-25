@@ -22,6 +22,11 @@ caps["pageLoadStrategy"] = "normal"  # complete
 opts = ChromeOptions()
 opts.add_experimental_option("detach", True)
 
+headers = {'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) '
+           'Chrome/53.0.2785.143 Safari/537.36'}
+proxies = {'http': 'http://proxy.kssm.intel.com:911',
+           'https': 'http://proxy.kssm.intel.com:911'}
+
 #driver = Chrome(options=opts, desired_capabilities=caps)
 
 # url of the homepage that will be scrap
@@ -30,7 +35,7 @@ homepage = "https://www.mudah.my/"
 # url to search macbook in penang under category computer
 url = "https://www.mudah.my/Penang/Computers-and-Accessories-3060/macbook-for-sale?lst=0&fs=1&w=103&cg=3060&q=macbook&so=1&st=s"
 
-# global keyword can be set here
+# global keyword search can be set here
 keyword_search = "Macbook"
 result_list = []
 
@@ -93,12 +98,8 @@ def check_next_page():
 
 
 def extract_title():
-    headers = {'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) '
-                             'Chrome/53.0.2785.143 Safari/537.36'}
-    proxies = {'http': 'http://proxy.kssm.intel.com:911',
-               'https': 'http://proxy.kssm.intel.com:911'}
     page = requests.get(url, headers=headers, proxies=proxies)
-    # page = requests.get(url, headers=headers)
+    # page = requests.get(url, headers=headers) # if using on non proxy network
     soup = BeautifulSoup(page.content, 'html.parser')
     result = soup.find_all(lambda tag: tag.name ==
                            'h2' and tag.get('class') == ['list_title'])
@@ -162,9 +163,7 @@ def main():
     # extract_title()
     # list_href_only()
     # process_url_list()
-    bfr()
     read_gmail_pass()
-    aftr()
     send_email()
 
 
