@@ -81,8 +81,7 @@ def next_page_availability():
         # extract_title()
 
 
-def start_page():
-    # automatically start with shortcut links, start with my preferred location Penang and category that I'm working on.
+def start_page():  # automatically start with shortcut links, start with my preferred location Penang and category that I'm working on.
     driver.get(url)
 
 
@@ -121,10 +120,8 @@ def process_url_list():
     for line in url_list:
         print(line)
 
-# func to read a txt file that contain a gmail app password.
 
-
-def read_gmail_pass():
+def read_gmail_pass():  # func to read a txt file that contain a gmail app password.
     file_pass = open("pass.txt", "r")
     # print(f.read())
     pass_new = (file_pass.read())
@@ -139,7 +136,7 @@ def send_email():
     server.starttls()
     server.ehlo()
 
-    server.login('izzatz13@gmail.com', 'pass_old')
+    server.login('iz.mail.robot@gmail.com', pass_old)
 
     subject = 'New iPhone Listing!'
     body = 'Check the iPhone Listing'
@@ -157,14 +154,6 @@ def send_email():
     server.quit()
 
 
-def bfr():
-    print("bfr", pass_old)
-
-
-def aftr():
-    print("aftr", pass_old)
-
-
 def main():
     # nav_search_page()
     # start_page()
@@ -176,7 +165,7 @@ def main():
     bfr()
     read_gmail_pass()
     aftr()
-    # send_email()
+    send_email()
 
 
 if __name__ == "__main__":
