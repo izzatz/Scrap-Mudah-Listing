@@ -27,7 +27,7 @@ headers = {'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleW
 proxies = {'http': 'http://proxy.kssm.intel.com:911',
            'https': 'http://proxy.kssm.intel.com:911'}
 
-#driver = Chrome(options=opts, desired_capabilities=caps)
+driver = Chrome(options=opts, desired_capabilities=caps)
 
 # url of the homepage that will be scrap
 homepage = "https://www.mudah.my/"
@@ -98,8 +98,8 @@ def check_next_page():
 
 
 def extract_title():
-    page = requests.get(url, headers=headers, proxies=proxies)
-    # page = requests.get(url, headers=headers) # if using on non proxy network
+    # page = requests.get(url, headers=headers, proxies=proxies)
+    page = requests.get(url, headers=headers)  # if using on non proxy network
     soup = BeautifulSoup(page.content, 'html.parser')
     result = soup.find_all(lambda tag: tag.name ==
                            'h2' and tag.get('class') == ['list_title'])
@@ -128,10 +128,12 @@ def read_gmail_pass():  # func to read a txt file that contain a gmail app passw
     pass_new = (file_pass.read())
     global pass_old
     pass_old = pass_new
-    print(pass_old)
+    # print(pass_old)
 
 
 def send_email():
+    read_gmail_pass()
+
     server = smtplib.SMTP('smtp.gmail.com', 587)
     server.ehlo()
     server.starttls()
@@ -163,7 +165,6 @@ def main():
     # extract_title()
     # list_href_only()
     # process_url_list()
-    read_gmail_pass()
     send_email()
 
 
