@@ -24,8 +24,10 @@ opts.add_experimental_option("detach", True)
 
 headers = {'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) '
            'Chrome/53.0.2785.143 Safari/537.36'}
-proxies = {'http': 'http://proxy.kssm.intel.com:911',
-           'https': 'http://proxy.kssm.intel.com:911'}
+set_proxies = {'http': 'http://proxy.kssm.intel.com:911',
+               'https': 'http://proxy.kssm.intel.com:911'}
+
+proxies = None  # put None to disable proxy / put proxies = set_proxies to enable
 
 driver = Chrome(options=opts, desired_capabilities=caps)
 
