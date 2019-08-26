@@ -2,13 +2,12 @@ from bs4 import BeautifulSoup
 from selenium.webdriver import ChromeOptions, Chrome
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.common.exceptions import NoSuchElementException
-import urllib.request
+import urllib
 import requests
-import time
 import os
-import sys
 import codecs
 import smtplib
+import time
 
 # chromedriver binary path
 chromedriver_path = './chromedriver.exe'
@@ -28,7 +27,7 @@ headers = {'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleW
 proxies = {'http': 'http://proxy.kssm.intel.com:911',
            'https': 'http://proxy.kssm.intel.com:911'}
 
-#driver = Chrome(options=opts, desired_capabilities=caps)
+driver = Chrome(options=opts, desired_capabilities=caps)
 
 # url of the homepage that will be scrap
 homepage = "https://www.mudah.my/"
@@ -51,6 +50,9 @@ result_dict = {}
 
 
 def check_website_up_down():
+    proxy_support = urllib.request.ProxyHandler(proxies)
+    opener = urllib.request.build_opener(proxy_support)
+    urllib.request.install_opener(opener)
     if (urllib.request.urlopen(homepage).getcode()) == 200:
         # print("True")
         return True
@@ -108,8 +110,8 @@ def check_next_page():
 
 
 def extract_title():
-    # page = requests.get(url, headers=headers, proxies=proxies)
-    page = requests.get(url, headers=headers)  # if using on non proxy network
+    page = requests.get(url, headers=headers, proxies=proxies)
+    # page = requests.get(url, headers=headers)  # if using on non proxy network
     soup = BeautifulSoup(page.content, 'html.parser')
     result = soup.find_all(lambda tag: tag.name ==
                            'h2' and tag.get('class') == ['list_title'])
@@ -170,7 +172,9 @@ def send_email():
 def main():
 
     if check_website_up_down() == True:
-        print("Website is up!")
+        print("Website is up!\n")
+        start_page()
+        extract_title()
     else:
         print("Website is down!")
 
