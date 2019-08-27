@@ -27,7 +27,7 @@ headers = {'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleW
 set_proxies = {'http': 'http://proxy.kssm.intel.com:911',
                'https': 'http://proxy.kssm.intel.com:911'}
 
-proxies = None  # put None to disable proxy / put proxies = set_proxies to enable
+proxies = set_proxies  # put None to disable proxy / put proxies = set_proxies to enable
 
 driver = Chrome(options=opts, desired_capabilities=caps)
 
@@ -113,14 +113,14 @@ def check_next_page():
 
 def extract_title():
     page = requests.get(url, headers=headers, proxies=proxies)
-    # page = requests.get(url, headers=headers)  # if using on non proxy network
     soup = BeautifulSoup(page.content, 'html.parser')
     result = soup.find_all(lambda tag: tag.name ==
                            'h2' and tag.get('class') == ['list_title'])
     result_list.extend(result)
+    print(result)
 
 
-def list_href_only():
+def list_href_only():  # print links only
     print("Total items: ", (len(result_list)))
     for item_list in result_list:
         # Find the url on each line
@@ -129,9 +129,7 @@ def list_href_only():
             # print (a_url)
             url_list.append(a_url)
 
-
-def process_url_list():
-    # process the global url_list
+    # print the global url_list
     for line in url_list:
         print(line)
 
@@ -177,6 +175,8 @@ def main():
         print("Website is up!\n")
         start_page()
         extract_title()
+        # list_href_only()
+
     else:
         print("Website is down!")
 
@@ -186,7 +186,6 @@ def main():
     # check_next_page()
     # extract_title()
     # list_href_only()
-    # process_url_list()
     # send_email()
 
 
