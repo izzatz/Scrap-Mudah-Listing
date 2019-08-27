@@ -27,16 +27,16 @@ headers = {'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleW
 set_proxies = {'http': 'http://proxy.kssm.intel.com:911',
                'https': 'http://proxy.kssm.intel.com:911'}
 
-proxies = set_proxies  # put None to disable proxy / put proxies = set_proxies to enable
+proxies = None  # put None to disable proxy / put proxies = set_proxies to enable
 
-driver = Chrome(options=opts, desired_capabilities=caps)
+# driver = Chrome(options=opts, desired_capabilities=caps)
 
 # url of the homepage that will be scrap
 homepage = "https://www.mudah.my/"
 
 # url to search macbook in penang under category computer
 url = "https://www.mudah.my/Penang/Computers-and-Accessories-3060/macbook-for-sale?lst=0&fs=1&w=103&cg=3060&q=macbook&so=1&st=s"
-
+offline_url = "C:\\Users\\Izzatz-X240\\Desktop\\Github\\Scrap-Mudah-Listing\\Scrap-Mudah-Listing\\offline_pages\\Used and New Laptops for sale, Buy second hand laptops in Malaysia, Sell laptops, computers, projectors, printers and hard disk drives in Malaysia.html"
 # global keyword search can be set here
 keyword_search = "Macbook"
 
@@ -100,15 +100,15 @@ def next_page_availability():
         # extract_title()
 
 
-def start_page():  # automatically start with shortcut links, start with my preferred location Penang and category that I'm working on.
-    driver.get(url)
-
-
 def check_next_page():
     while next_page_availability() == True:
         extract_title()
     else:
         list_href_only()
+
+
+def start_page():  # automatically start with shortcut links, start with my preferred location Penang and category that I'm working on.
+    driver.get(url)
 
 
 def extract_title():
@@ -118,10 +118,6 @@ def extract_title():
                            'h2' and tag.get('class') == ['list_title'])
     result_list.extend(result)
     # print(result)
-
-
-def print_result():
-    print(result_list)
 
 
 def list_href_only():  # print links only
@@ -175,14 +171,17 @@ def send_email():
 
 
 def main():
-    if check_website_up_down() == True:
-        print("Website is up!\n")
-        start_page()
-        extract_title()
-        list_href_only()
+    # start_page()
+    extract_title()
+    list_href_only()
+    # if check_website_up_down() == True:
+    #     print("Website is up!\n")
+    #     start_page()
+    #     extract_title()
+    #     list_href_only()
 
-    else:
-        print("Website is down!")
+    # else:
+    #     print("Website is down!")
 
     # nav_search_page()
     # start_page()
