@@ -114,6 +114,7 @@ def start_page():  # automatically start with shortcut links, start with my pref
 def extract_title():
     page = requests.get(url, headers=headers, proxies=proxies)
     soup = BeautifulSoup(page.content, 'html.parser')
+    print(soup.title)
     result = soup.find_all(lambda tag: tag.name ==
                            'h2' and tag.get('class') == ['list_title'])
     result_list.extend(result)
@@ -133,6 +134,13 @@ def list_href_only():  # print links only
     # print the global url_list
     for line in url_list:
         print(line)
+
+
+def list_title_only():
+    print("Total items: ", (len(result_list)))
+    for each_tag in result_list:
+        staininfo_attrb_value = each_tag["title"]
+        print(staininfo_attrb_value)
 
 
 def read_gmail_pass():  # func to read a txt file that contain a gmail app password.
@@ -174,6 +182,7 @@ def main():
     # start_page()
     extract_title()
     list_href_only()
+    # list_title_only()
     # if check_website_up_down() == True:
     #     print("Website is up!\n")
     #     start_page()
